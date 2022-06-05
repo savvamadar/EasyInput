@@ -13,7 +13,6 @@ public class KeyboardInput : MonoBehaviour
     public KeyCode right;
     public KeyCode jump;
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(forward))

@@ -28,7 +28,8 @@ public class ControllerInput : MonoBehaviour
         }
 
 
-        //Hav to add Joy1Horizontal and Joy1Verical in Input
+        //Have to add Joy1Horizontal and Joy1Verical in Edit > Project Settings > Input Manager > Axes
+        //horizontal
         float h = Input.GetAxis("Joy" + xboxController + "Horizontal");
         if(h < 0)
         {
@@ -39,7 +40,7 @@ public class ControllerInput : MonoBehaviour
             EasyInput.Player(player).SetInput("rht", Time.deltaTime, h);
         }
 
-
+        //vertical
         float v = Input.GetAxis("Joy" + xboxController + "Vertical");
         if (v < 0)
         {
@@ -50,6 +51,7 @@ public class ControllerInput : MonoBehaviour
             EasyInput.Player(player).SetInput("bwd", Time.deltaTime, v);
         }
 
+        //jump
         if (Input.GetKey("joystick "+xboxController+" button 0"))
         {
             EasyInput.Player(player).SetInput("jmp", Time.deltaTime, 1f);

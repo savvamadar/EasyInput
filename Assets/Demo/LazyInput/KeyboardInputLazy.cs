@@ -31,7 +31,6 @@ public class KeyboardInputLazy : MonoBehaviour
         }
         if (Input.GetKey(jump))
         {
-            //Debug.Log("jmp lazy");
             EasyInput.SetInput("jmp", Time.deltaTime, 1f);
         }
     }

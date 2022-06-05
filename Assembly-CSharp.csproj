@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{03356C66-023B-97F4-7638-6BE35813DD9F}</ProjectGuid>
+    <ProjectGuid>{3086AB99-376E-7140-9336-0C6222D843BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -60,6 +60,7 @@
     <Compile Include="Assets\Demo\LazyInput\PlayerMovementLazy.cs" />
     <Compile Include="Assets\EasyInput\EasyInput.cs" />
     <Compile Include="Assets\Demo\Input\ControllerInput.cs" />
+    <Compile Include="Assets\Demo\InputDebugger.cs" />
     <Compile Include="Assets\Demo\Input\PlayerMovement.cs" />
     <Compile Include="Assets\Demo\Input\KeyboardInput.cs" />
   </ItemGroup>

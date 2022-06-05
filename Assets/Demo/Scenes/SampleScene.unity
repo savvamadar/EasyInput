@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 791786864}
   - component: {fileID: 791786863}
   - component: {fileID: 791786869}
+  - component: {fileID: 791786870}
   m_Layer: 0
   m_Name: P3 (Xbox Controller)
   m_TagString: Untagged
@@ -458,6 +459,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 2
+--- !u!114 &791786870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791786862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc021a656363fd4bbf4953cff9d664b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +571,7 @@ GameObject:
   - component: {fileID: 1259289691}
   - component: {fileID: 1259289690}
   - component: {fileID: 1259289696}
+  - component: {fileID: 1259289697}
   m_Layer: 0
   m_Name: P2 (Keyboard Arrows)
   m_TagString: Untagged
@@ -691,6 +706,19 @@ MonoBehaviour:
   rb: {fileID: 1259289691}
   force: 20
   player: 1
+--- !u!114 &1259289697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259289689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc021a656363fd4bbf4953cff9d664b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 1
 --- !u!1 &2057441891
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,6 +734,7 @@ GameObject:
   - component: {fileID: 2057441892}
   - component: {fileID: 2057441898}
   - component: {fileID: 2057441897}
+  - component: {fileID: 2057441899}
   m_Layer: 0
   m_Name: P1 (Keyboard WASD)
   m_TagString: Untagged
@@ -838,6 +867,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2057441892}
   force: 20
+--- !u!114 &2057441899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057441891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc021a656363fd4bbf4953cff9d664b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 0
 --- !u!1 &2072052584
 GameObject:
   m_ObjectHideFlags: 0
