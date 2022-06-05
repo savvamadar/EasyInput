@@ -13,7 +13,18 @@ Features:
 - Input Controller Swapping via Script
 
 
-Example Usage:
+Example Lazy Usage:
 - Create Object and add EasyInput component
 - Look at [KeyboardInputLazy.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/LazyInput/KeyboardInputLazy.cs)
 - Look at [PlayerMovementLazy.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/LazyInput/PlayerMovementLazy.cs)
+
+
+Example Multiplayer Usage:
+- Create Object and add EasyInput component
+- Look at [KeyboardInput.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/Input/KeyboardInput.cs)
+- Look at [PlayerMovement.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/Input/PlayerMovement.cs)
+
+Example Controller Usage:
+- Create Object and add EasyInput component
+- Look at [ControllerInput.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/Input/ControllerInput.cs)
+- Look at [PlayerMovement.cs](https://github.com/savvamadar/EasyInput/blob/main/Assets/Demo/Input/PlayerMovement.cs)
