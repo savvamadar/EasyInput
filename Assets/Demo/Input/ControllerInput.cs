@@ -33,28 +33,28 @@ public class ControllerInput : MonoBehaviour
         float h = Input.GetAxis("Joy" + xboxController + "Horizontal");
         if(h < 0)
         {
-            EasyInput.Player(player).SetInput("lft", Time.deltaTime, Mathf.Abs(h));
+            EasyInput.Player(player).SetInput("lft", Time.unscaledDeltaTime, Mathf.Abs(h));
         }
         else if(h > 0)
         {
-            EasyInput.Player(player).SetInput("rht", Time.deltaTime, h);
+            EasyInput.Player(player).SetInput("rht", Time.unscaledDeltaTime, h);
         }
 
         //vertical
         float v = Input.GetAxis("Joy" + xboxController + "Vertical");
         if (v < 0)
         {
-            EasyInput.Player(player).SetInput("fwd", Time.deltaTime, Mathf.Abs(v));
+            EasyInput.Player(player).SetInput("fwd", Time.unscaledDeltaTime, Mathf.Abs(v));
         }
         else if (v > 0)
         {
-            EasyInput.Player(player).SetInput("bwd", Time.deltaTime, v);
+            EasyInput.Player(player).SetInput("bwd", Time.unscaledDeltaTime, v);
         }
 
         //jump
         if (Input.GetKey("joystick "+xboxController+" button 0"))
         {
-            EasyInput.Player(player).SetInput("jmp", Time.deltaTime, 1f);
+            EasyInput.Player(player).SetInput("jmp", Time.unscaledDeltaTime, 1f);
         }
     }
 }

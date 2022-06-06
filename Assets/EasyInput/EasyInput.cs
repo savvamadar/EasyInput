@@ -118,6 +118,15 @@ public class InputManager
             }
         }
     }
+
+    public void ResetInputs()
+    {
+        foreach (var kv in map)
+        {
+            map[kv.Key].marked_for_release = true;
+            map[kv.Key].adjust_input(0, 0);
+        }
+    }
 }
 
 public class EasyInput : MonoBehaviour
@@ -187,6 +196,11 @@ public class EasyInput : MonoBehaviour
     public static void SetInput(string key, float deltaTime, float strength)
     {
         Player(0).SetInput(key, deltaTime, strength);
+    }
+
+    public static void ResetInputs()
+    {
+        Player(0).ResetInputs();
     }
 
 
