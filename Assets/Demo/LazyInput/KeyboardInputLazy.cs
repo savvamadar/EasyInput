@@ -15,23 +15,23 @@ public class KeyboardInputLazy : MonoBehaviour
     {
         if (Input.GetKey(forward))
         {
-            EasyInput.SetInput("fwd", Time.unscaledDeltaTime, 1f);
+            EasyInput.SetInput("fwd", Time.unscaledDeltaTime, Time.frameCount, 1f);
         }
         if (Input.GetKey(backward))
         {
-            EasyInput.SetInput("bwd", Time.unscaledDeltaTime, 1f);
+            EasyInput.SetInput("bwd", Time.unscaledDeltaTime, Time.frameCount, 1f);
         }
         if (Input.GetKey(left))
         {
-            EasyInput.SetInput("lft", Time.unscaledDeltaTime, 1f);
+            EasyInput.SetInput("lft", Time.unscaledDeltaTime, Time.frameCount, 1f);
         }
         if (Input.GetKey(right))
         {
-            EasyInput.SetInput("rht", Time.unscaledDeltaTime, 1f);
+            EasyInput.SetInput("rht", Time.unscaledDeltaTime, Time.frameCount, 1f);
         }
         if (Input.GetKey(jump))
         {
-            EasyInput.SetInput("jmp", Time.unscaledDeltaTime, 1f);
+            EasyInput.SetInput("jmp", Time.unscaledDeltaTime, Time.frameCount, 1f);
         }
     }
 }

@@ -4,41 +4,37 @@ using UnityEngine;
 
 public class KeyInput
 {
-    public bool key_down = false;
-    public bool key_up = false;
+    public int key_down = -1;
+    public int key_up = -1;
     public float key_time = 0f;
     public float key_strength = 0f;
     public bool marked_for_release = false;
 
-    public void adjust_input(float time, float strength)
+    public void adjust_input(float time, int frame, float strength)
     {
-        if(time == 0)
+        if (time == 0)
         {
-            if(key_up == true)
+            if (key_time > 0f && key_down > key_up)
             {
-                key_up = false;
+                key_up = frame;
+            }
+            else if (key_up < frame)
+            {
                 key_time = 0f;
                 key_strength = 0f;
-            }
-            if (key_time > 0f)
-            {
-                key_up = true;
             }
         }
         else
         {
             if (key_time == 0f)
             {
-                key_down = true;
+                key_down = frame;
             }
-            else
-            {
-                key_down = false;
-            }
-            key_strength = strength;
             key_time += time;
             marked_for_release = false;
+            key_strength = strength;
         }
+        marked_for_release = false;
     }
 }
 
@@ -47,13 +43,13 @@ public class InputManager
 
     Dictionary<string, KeyInput> map = new Dictionary<string, KeyInput>();
 
-    public void SetInput(string key, float deltaTime, float strength)
+    public void SetInput(string key, float deltaTime, int frame, float strength)
     {
         if (!map.ContainsKey(key))
         {
             map[key] = new KeyInput();
         }
-        map[key].adjust_input(deltaTime, strength);
+        map[key].adjust_input(deltaTime, frame, strength);
     }
 
     public bool GetInputDown(string key)
@@ -62,7 +58,7 @@ public class InputManager
         {
             map[key] = new KeyInput();
         }
-        return map[key].key_down;
+        return map[key].key_down == Time.frameCount;
     }
 
     public bool GetInputUp(string key)
@@ -71,7 +67,7 @@ public class InputManager
         {
             map[key] = new KeyInput();
         }
-        return map[key].key_up;
+        return map[key].key_up + 1 == Time.frameCount;
     }
 
     public bool GetInput(string key)
@@ -103,16 +99,16 @@ public class InputManager
         {
             if (map[kv.Key].marked_for_release)
             {
-                map[kv.Key].adjust_input(0, 0);
+                map[kv.Key].adjust_input(0, Time.frameCount, 0);
             }
         }
     }
 
     public void MarkKeys()
     {
-        foreach(var kv in map)
+        foreach (var kv in map)
         {
-            if (map[kv.Key].key_time > 0f)
+            if (map[kv.Key].key_time > 0f && map[kv.Key].key_up < Time.frameCount)
             {
                 map[kv.Key].marked_for_release = true;
             }
@@ -124,7 +120,7 @@ public class InputManager
         foreach (var kv in map)
         {
             map[kv.Key].marked_for_release = true;
-            map[kv.Key].adjust_input(0, 0);
+            map[kv.Key].adjust_input(0, Time.frameCount, 0);
         }
     }
 }
@@ -137,13 +133,13 @@ public class EasyInput : MonoBehaviour
 
     public void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             transform.parent = null;
             DontDestroyOnLoad(gameObject);
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(this);
         }
@@ -161,7 +157,7 @@ public class EasyInput : MonoBehaviour
 
     public static InputManager Player(int i)
     {
-        while(i >= _inputs.Count)
+        while (i >= _inputs.Count)
         {
             _inputs.Add(new InputManager());
         }
@@ -193,9 +189,9 @@ public class EasyInput : MonoBehaviour
         return Player(0).GetInputStrength(key);
     }
 
-    public static void SetInput(string key, float deltaTime, float strength)
+    public static void SetInput(string key, float deltaTime, int frame, float strength)
     {
-        Player(0).SetInput(key, deltaTime, strength);
+        Player(0).SetInput(key, deltaTime, frame, strength);
     }
 
     public static void ResetInputs()
