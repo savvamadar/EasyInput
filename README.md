@@ -3,6 +3,11 @@ An input system for unity because I hate the new input system.
 
 Supports multiple local players out of the box.
 
+Remember to Edit > Project Settings > Script Execution Order
+and add EasyInput - make sure that it is above "Default Time"
+
+Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
+
 
 Features:
 - Checking Input Press

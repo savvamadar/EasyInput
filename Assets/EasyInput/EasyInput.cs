@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class KeyInput
 {
+    public float key_down_time = 0f;
+    public float key_up_time = 0f;
+
     public int key_down = -1;
     public int key_up = -1;
+
     public float key_time = 0f;
     public float key_strength = 0f;
+
     public bool marked_for_release = false;
 
     public void adjust_input(float time, int frame, float strength)
     {
-        if (time == 0)
+        if (time == 0f)
         {
-            if (key_time > 0f && key_down > key_up)
+            if (key_down >= 0)
             {
+                key_down = -1;
+
                 key_up = frame;
-            }
-            else if (key_up < frame)
-            {
+                key_up_time = Time.realtimeSinceStartup;
+
                 key_time = 0f;
                 key_strength = 0f;
+                marked_for_release = true;
             }
         }
         else
@@ -29,12 +36,13 @@ public class KeyInput
             if (key_time == 0f)
             {
                 key_down = frame;
+                key_down_time = Time.realtimeSinceStartup;
             }
             key_time += time;
-            marked_for_release = false;
             key_strength = strength;
+            marked_for_release = false;
         }
-        marked_for_release = false;
+
     }
 }
 
@@ -43,6 +51,7 @@ public class InputManager
 
     Dictionary<string, KeyInput> map = new Dictionary<string, KeyInput>();
 
+    //Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
     public void SetInput(string key, float deltaTime, int frame, float strength)
     {
         if (!map.ContainsKey(key))
@@ -67,12 +76,16 @@ public class InputManager
         {
             map[key] = new KeyInput();
         }
-        return map[key].key_up + 1 == Time.frameCount;
+        return map[key].key_up == Time.frameCount;
     }
 
     public bool GetInput(string key)
     {
-        return (!GetInputUp(key)) && (GetInputTime(key) > 0f);
+        if (!map.ContainsKey(key))
+        {
+            map[key] = new KeyInput();
+        }
+        return map[key].key_down >= 0;
     }
 
     public float GetInputStrength(string key)
@@ -90,7 +103,7 @@ public class InputManager
         {
             map[key] = new KeyInput();
         }
-        return map[key].key_time;
+        return (map[key].key_down_time > map[key].key_up_time) ? (Time.realtimeSinceStartup - map[key].key_down_time) : (map[key].key_up_time - map[key].key_down_time);
     }
 
     public void ReleaseKeys()
@@ -108,7 +121,7 @@ public class InputManager
     {
         foreach (var kv in map)
         {
-            if (map[kv.Key].key_time > 0f && map[kv.Key].key_up < Time.frameCount)
+            if (map[kv.Key].key_time > 0f && map[kv.Key].key_up <= Time.frameCount)
             {
                 map[kv.Key].marked_for_release = true;
             }
@@ -125,9 +138,13 @@ public class InputManager
     }
 }
 
+//Remember to Edit > Project Settings > Script Execution Order
+//and add EasyInput - make sure that it is above "Default Time"
+//
+//Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
 public class EasyInput : MonoBehaviour
 {
-    public static List<InputManager> _inputs = new List<InputManager>();
+    public static Dictionary<int, InputManager> _inputs = new Dictionary<int, InputManager>();
 
     public static EasyInput instance;
 
@@ -146,20 +163,20 @@ public class EasyInput : MonoBehaviour
     }
 
 
-    public void LateUpdate()
+    public void Update()
     {
-        for (int i = 0; i < _inputs.Count; i++)
+        foreach (var i in _inputs)
         {
-            _inputs[i].ReleaseKeys();
-            _inputs[i].MarkKeys();
+            i.Value.ReleaseKeys();
+            i.Value.MarkKeys();
         }
     }
 
     public static InputManager Player(int i)
     {
-        while (i >= _inputs.Count)
+        if (!_inputs.ContainsKey(i))
         {
-            _inputs.Add(new InputManager());
+            _inputs[i] = new InputManager();
         }
         return _inputs[i];
     }
@@ -189,6 +206,7 @@ public class EasyInput : MonoBehaviour
         return Player(0).GetInputStrength(key);
     }
 
+    //Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
     public static void SetInput(string key, float deltaTime, int frame, float strength)
     {
         Player(0).SetInput(key, deltaTime, frame, strength);
