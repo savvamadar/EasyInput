@@ -8,6 +8,7 @@ and add EasyInput - make sure that it is above "Default Time"
 
 Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
 
+The EasyInput script must be attached to an object in the scene.
 
 Features:
 - Checking Input Press
