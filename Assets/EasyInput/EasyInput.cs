@@ -52,8 +52,14 @@ public class InputManager
     Dictionary<string, KeyInput> map = new Dictionary<string, KeyInput>();
 
     //Any script that touches any of the "SetInput" methods should go above "Default Time" but below "EasyInput"
-    public void SetInput(string key, float deltaTime, int frame, float strength)
+    //bypassInputBlock is for UI input/ navigation
+    public void SetInput(string key, float deltaTime, int frame, float strength, bool bypassInputBlock = false)
     {
+        if (EasyInput.BlockInput && !bypassInputBlock)
+        {
+            return;
+        }
+
         if (!map.ContainsKey(key))
         {
             map[key] = new KeyInput();
@@ -106,6 +112,15 @@ public class InputManager
         return (map[key].key_down_time > map[key].key_up_time) ? (Time.realtimeSinceStartup - map[key].key_down_time) : (map[key].key_up_time - map[key].key_down_time);
     }
 
+    public int GetInputFrame(string key)
+    {
+        if (!map.ContainsKey(key))
+        {
+            map[key] = new KeyInput();
+        }
+        return map[key].key_down;
+    }
+
     public void ReleaseKeys()
     {
         foreach (var kv in map)
@@ -148,13 +163,20 @@ public class EasyInput : MonoBehaviour
 
     public static EasyInput instance;
 
+    public static bool BlockInput = false;
+
+    public bool DoNotDestroy = true;
+
     public void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(gameObject);
+            if (DoNotDestroy)
+            {
+                transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
         }
         else if (instance != this)
         {
@@ -199,6 +221,11 @@ public class EasyInput : MonoBehaviour
     public static float GetInputTime(string key)
     {
         return Player(0).GetInputTime(key);
+    }
+
+    public static float GetInputFrame(string key)
+    {
+        return Player(0).GetInputFrame(key);
     }
 
     public static float GetInputStrength(string key)
